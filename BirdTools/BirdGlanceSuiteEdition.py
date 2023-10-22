@@ -1,21 +1,9 @@
 import requests
 import socket as s
 import json
-from urllib.parse import urlparse
 from dns.resolver import *
 import sys
 
-from colorama import init, Fore, Back, Style
-
-from PyEnhance import Stamps
-
-Stamp = Stamps.Stamp
-
-Input = Stamp.Input
-Output = Stamp.Output
-Error = Stamp.Error
-Info = Stamp.Info
-Warn = Stamp.Warn
 
 PositiveStatusCodes = [200, 201, 202, 203, 204, 205, 206,
                        300, 301, 302, 303, 304, 305, 307,
@@ -39,7 +27,6 @@ class Start(object):
         self.Stage1()
         self.Stage2()
         self.Stage3()
-        self.Stage4()
 
     def FetchTLDS(self):
         TLDSs = "https://data.iana.org/TLD/tlds-alpha-by-domain.txt"
@@ -54,11 +41,11 @@ class Start(object):
                 self.URL = self.URL[:-1]
             if self.URL.endswith(i):
                 self.TLDSValid = True
-                print(f"{Info} URL has a valid TLDS (.com, .org, .xyz, etc.)")
+                print(f" URL has a valid TLDS (.com, .org, .xyz, etc.)")
                 break
 
         if self.TLDSValid is False:
-            inp = input(f"{Error} URL does not have a valid TLDS. Do you want to continue? [Y/N] ")
+            inp = input(f" URL does not have a valid TLDS. Do you want to continue? [Y/N] ")
             if inp in ["y", "Y"]:
                 print("Continuing...")
             else:
@@ -68,9 +55,9 @@ class Start(object):
     def IsURLAnIP(self):
         try:
             s.inet_aton(self.URL)
-            print(f"{Info} URL is an IP address")
+            print(f" URL is an IP address")
         except s.error:
-            print(f"{Info} URL is not an IP address")
+            print(f" URL is not an IP address")
 
     def Refactor(self, URL):
         self.TLDSValid = False
@@ -93,14 +80,14 @@ class Start(object):
         def HTTPcheck():
             GetReqStatus = requests.get(url=self.URLHTTP)
             if GetReqStatus.status_code in PositiveStatusCodes:
-                print(f"{Info} HTTP Valid")
+                print(f" HTTP Valid")
             else:
                 print(f"{self.URL} is not a valid URL")
 
         def HTTPScheck():
             GetReqStatus = requests.get(url=self.URLHTTPS)
             if GetReqStatus.status_code == 200:
-                print(f"{Info} HTTPS Valid")
+                print(f" HTTPS Valid")
             else:
                 print(f"{self.URL} is not a valid URL")
 
@@ -145,16 +132,6 @@ class Start(object):
         StateOrRegion()
         City()
         ISP()
-
-    def Stage4(self):
-        print('\n')
-        print(f"{Output} Hostname: {self.HostnameForIP}")
-        print(f"{Output} IP Address: {self.WebSiteIP}")
-        print(f"{Output} ISP: {self.IPinfoISPOutput}")
-        print(f"{Output} Country: {self.IPinfoCountryOutput}")
-        print(f"{Output} State or Region: {self.IPinfoStateOrRegionOutput}")
-        print(f"{Output} City: {self.IPinfoCityOutput}")
-
 
 
     def JsonOutput(self):
