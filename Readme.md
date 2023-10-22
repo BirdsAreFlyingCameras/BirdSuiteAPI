@@ -33,13 +33,17 @@ OSINT scripts to add:
 
 ### installation
 
-    git clone https://github.com/BirdsAreFlyingCameras/BirdSuiteAPI
+1. Clone the repo
 
+       git clone https://github.com/BirdsAreFlyingCameras/BirdSuiteAPI
 
-    cd BirdSuiteAPI
+2. CD into the repos directory 
 
+       cd BirdSuiteAPI
 
-    pip install -r requirements.txt
+3. Install python requirements
+
+       pip install -r requirements.txt
 
 ### Usage
 
@@ -51,16 +55,16 @@ OSINT scripts to add:
 
 #### Curl:
 
-Not working at the moment will fix promptly.
+Not working at the moment I'm currently fixing this issue 
+will be fixed soon.
 
 #### Postman:
 
-Type: Post  
+**BirdGlace Request**: 
+
+Request Type: Post  
 
 Headers: All
-
-
-**BirdGlace Request**: 
 
 Request Body:
 
@@ -68,10 +72,19 @@ Request Body:
     "URL": "www.google.com"
     }
 
+Single Line Version:
+
+    {"URL": "www.google.com"}
+
 
 **BirdScan Requests**
 
-Common Scan:
+Request Type: Post  
+
+Headers: All
+
+
+**Common Scan:**
 
 Notes:
 
@@ -86,7 +99,13 @@ Request Body:
     "ScanType": "Common"
     }
 
-Full Scan:
+Single Line Version:
+
+    {"URLorIP": "www.google.com", "ScanType": "Common"}
+
+
+
+**Full Scan:**
 
 Notes:
 
@@ -101,7 +120,12 @@ Request Body:
     "ScanType": "Full"
     }
 
-Custom Scan:
+Single Line Version:
+
+    {"URLorIP": "www.google.com", "ScanType": "Full"}
+    
+
+**Custom Scan:**
 
 Notes: 
 
@@ -116,5 +140,8 @@ Request Body:
     "InputRange" 100
     }
 
+Single Line Version:
+
+    {"URLorIP": "www.google.com", "ScanType": "Custom", "InputRange" 100}
 
 ***Not A Bird | CEO of Bird Inc.***
