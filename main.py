@@ -31,7 +31,7 @@ class BirdScanerInput(BaseModel):
 
     URLorIP: str
     ScanType: str
-    InputRange: Optional[int] = None
+    InputRange: Optional[str] = None
 
     @root_validator(pre=True)
 
@@ -43,8 +43,8 @@ class BirdScanerInput(BaseModel):
         if JsonData.get("ScanType") == "Custom" and JsonData.get("InputRange") is None:
             raise ValueError("[ERROR] SCAN TYPE CUSTOM MUST HAVE A RANGE [ERROR] ")
 
-        if JsonData.get("ScanType") == "Custom" and JsonData.get("InputRange") is not int:
-            raise ValueError("[ERROR] INPUT RANGE MUST BE INT [ERROR]")
+        #if JsonData.get("ScanType") == "Custom" and JsonData.get("InputRange") is not int:
+        #    raise ValueError("[ERROR] INPUT RANGE MUST BE INT [ERROR]")
 
         return JsonData
 
