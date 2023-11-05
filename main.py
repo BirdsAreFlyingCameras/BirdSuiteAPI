@@ -1,12 +1,31 @@
 from fastapi import *
+from fastapi.middleware.cors import CORSMiddleware
+
+
+
 from BirdTools import BirdGlanceSuiteEdition as BirdGlance
 from BirdTools import BirdScanSuiteEdition as BirdScan
+
+
+
 import json
 from pydantic import *
 
 from typing import *
 
+
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allows all origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods
+    allow_headers=["*"],  # Allows all headers
+)
+
+
 
 class BirdScanerInput(BaseModel):
 
