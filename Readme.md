@@ -24,7 +24,6 @@ OSINT scripts added:
 
 OSINT scripts to add:
 
-- Histonin DNS,
 - WebParse,  
 - HistorianDNS,
 - BirdBuster 
