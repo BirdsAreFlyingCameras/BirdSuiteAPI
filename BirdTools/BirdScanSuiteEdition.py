@@ -1,5 +1,8 @@
-import socket
+import socket, os, json, sys
+import datetime
 import threading as t
+
+datetime = datetime.datetime
 
 
 class PortScaner(object):
@@ -113,6 +116,40 @@ class PortScaner(object):
                 self.PortsOutputDict[port] = "is open its use can not be identified by this program"
 
         return self.PortsOutputDict
+
+
+
+def DownloadResultsTXT(self, JsonData, URLorIP):
+    self.Date = datetime.now()
+
+    Date = self.Date
+
+    os.chdir('/..')
+
+    if not os.path.exists('Temp'):
+        os.mkdir('Temp')
+
+    os.chdir('Temp')
+
+    FileName = self.StorageFileName = (f'{URLorIP} {Date.month}-{Date.day}-{Date.year} ({Date.strftime("%I")}_{Date.strftime("%M")}_{Date.strftime("%S")} {Date.strftime("%p")})')
+
+    os.mkdir(f"{FileName}.txt")
+
+    for Service in JsonData.keys():
+        for Port in JsonData.values():
+            with open(f"{FileName}.txt", "a") as File:
+                File.write(f"{Service} {Port}")
+    CurDir = os.getcwd()
+    UserOS = sys.platform
+
+    if sys.platform.startswith("linux"):
+        return f"{CurDir}/{FileName}"
+    elif sys.platform.startswith("win"):
+        return f"{CurDir}\\{FileName}"
+
+
+
+
 
 
 

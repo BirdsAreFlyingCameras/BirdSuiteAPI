@@ -1,6 +1,7 @@
 from fastapi import *
 from fastapi.middleware.cors import CORSMiddleware
 
+from fastapi.responses import FileResponse
 
 
 from BirdTools import BirdGlanceSuiteEdition as BirdGlance
@@ -9,6 +10,7 @@ from BirdTools import BirdScanSuiteEdition as BirdScan
 
 
 import json
+
 from pydantic import *
 
 from typing import *
@@ -48,6 +50,20 @@ class BirdScanerInput(BaseModel):
 
         return JsonData
 
+class BirdScanDownloadCheck(BaseModel):
+
+    FileType: str
+    URLorIP: str
+    JsonData: str
+
+    @root_validator(pre=True)
+
+    def CheckInput(cls, PostData):
+
+        if PostData.get("FileType") not in ["txt", "csv"]:
+            raise ValueError("[ERROR] FILE TYPE MUST BE ONE OF THESE .txt or .csv[ERROR] ")
+
+        return PostData
 @app.get("/")
 async def root():
 
@@ -88,3 +104,16 @@ async def BirdScanPost(UserInput: BirdScanerInput):
         StartScan = BirdScan.PortScaner(URLorIP=URLorIP, ScanType=ScanTypeChoice)
         JsonDict = StartScan.JsonOutput()
         return JsonDict
+
+@app.post("/BirdScan/Download")
+async def BirdScanDownload(PostData: BirdScanDownloadCheck):
+
+    URLorIP = PostData.URLorIP
+    FileType = PostData.FileType
+    JsonDataForFile = PostData.JsonData
+
+    if FileType == "txt":
+        File = BirdScan.DownloadResultsTXT(URLorIP=URLorIP, JsonData=JsonDataForFile)
+
+        return FileResponse(File)
+
