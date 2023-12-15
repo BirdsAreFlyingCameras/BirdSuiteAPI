@@ -54,7 +54,7 @@ class BirdScanDownloadCheck(BaseModel):
 
     FileType: str
     URLorIP: str
-    JsonData: str
+    JsonData: Dict
 
     @root_validator(pre=True)
 
@@ -108,12 +108,16 @@ async def BirdScanPost(UserInput: BirdScanerInput):
 @app.post("/BirdScan/Download")
 async def BirdScanDownload(PostData: BirdScanDownloadCheck):
 
+
+
     URLorIP = PostData.URLorIP
     FileType = PostData.FileType
     JsonDataForFile = PostData.JsonData
 
     if FileType == "txt":
-        File = BirdScan.DownloadResultsTXT(URLorIP=URLorIP, JsonData=JsonDataForFile)
+        File = BirdScan.DownloadResults(URLorIP=URLorIP, JsonData=JsonDataForFile,FileType=FileType)
 
-        return FileResponse(File)
+        print(str(File.FilePathForDownload))
+
+        return FileResponse(File.FilePathForDownload)
 

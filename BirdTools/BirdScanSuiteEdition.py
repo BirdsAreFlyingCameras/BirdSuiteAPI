@@ -119,35 +119,56 @@ class PortScaner(object):
 
 
 
-def DownloadResultsTXT(self, JsonData, URLorIP):
-    self.Date = datetime.now()
+class DownloadResults:
 
-    Date = self.Date
+    def __init__(self, JsonData, URLorIP, FileType):
 
-    os.chdir('/..')
+        if FileType == 'txt':
+            self.DownloadResultsTXT(JsonData=JsonData,URLorIP=URLorIP)
+        else:
+            print('Not Yet Added CSV Download')
 
-    if not os.path.exists('Temp'):
-        os.mkdir('Temp')
-
-    os.chdir('Temp')
-
-    FileName = self.StorageFileName = (f'{URLorIP} {Date.month}-{Date.day}-{Date.year} ({Date.strftime("%I")}_{Date.strftime("%M")}_{Date.strftime("%S")} {Date.strftime("%p")})')
-
-    os.mkdir(f"{FileName}.txt")
-
-    for Service in JsonData.keys():
-        for Port in JsonData.values():
-            with open(f"{FileName}.txt", "a") as File:
-                File.write(f"{Service} {Port}")
-    CurDir = os.getcwd()
-    UserOS = sys.platform
-
-    if sys.platform.startswith("linux"):
-        return f"{CurDir}/{FileName}"
-    elif sys.platform.startswith("win"):
-        return f"{CurDir}\\{FileName}"
+    def DownloadResultsTXT(self, JsonData, URLorIP):
 
 
+        self.Date = datetime.now()
+        Date = self.Date
+
+        MainDir = os.getcwd()
+
+        print(MainDir)
+
+        if not os.path.exists('Temp'):
+            os.mkdir('Temp')
+            os.chdir('Temp')
+        else:
+            os.chdir('Temp')
+
+
+        FileName = self.StorageFileName = (f'{URLorIP} {Date.month}-{Date.day}-{Date.year} ({Date.strftime("%I")}_{Date.strftime("%M")}_{Date.strftime("%S")} {Date.strftime("%p")})')
+        with open(f"{FileName}.txt", 'x') as File:
+            File.write(f"{FileName} - Port Scan Results")
+            File.write('\n\n')
+            File.write('Service  Port')
+            File.write('\n')
+
+        for Service in JsonData.keys():
+            for Port in JsonData.values():
+                with open(f"{URLorIP}.txt", "a") as File:
+                    File.write(f"{Service}  {Port}")
+                    File.write('\n')
+
+        os.chdir(MainDir)
+
+
+        if sys.platform.startswith("linux"):
+            self.FilePathForDownload = f"{MainDir}/Temp/{FileName}.txt"
+            print(self.FilePathForDownload)
+            return self.FilePathForDownload
+        elif sys.platform.startswith("win"):
+            self.FilePathForDownload = f"{MainDir}\\Temp\\{FileName}.txt"
+            print(self.FilePathForDownload)
+            return self.FilePathForDownload
 
 
 
