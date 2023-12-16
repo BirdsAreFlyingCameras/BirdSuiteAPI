@@ -145,16 +145,15 @@ class DownloadResults:
             os.chdir('Temp')
 
 
-        FileName = self.StorageFileName = (f'{URLorIP} {Date.month}-{Date.day}-{Date.year} ({Date.strftime("%I")}_{Date.strftime("%M")}_{Date.strftime("%S")} {Date.strftime("%p")})')
+        FileName = (f'{URLorIP} {Date.month}-{Date.day}-{Date.year} ({Date.strftime("%I")}_{Date.strftime("%M")}_{Date.strftime("%S")} {Date.strftime("%p")})')
         with open(f"{FileName}.txt", 'x') as File:
-            File.write(f"{FileName} - Port Scan Results")
+            File.write(f"{URLorIP} - Port Scan Results")
             File.write('\n\n')
             File.write('Service  Port')
             File.write('\n')
 
-        for Service in JsonData.keys():
-            for Port in JsonData.values():
-                with open(f"{URLorIP}.txt", "a") as File:
+        for Service, Port in JsonData.items():
+                with open(f"{FileName}.txt", "a") as File:
                     File.write(f"{Service}  {Port}")
                     File.write('\n')
 

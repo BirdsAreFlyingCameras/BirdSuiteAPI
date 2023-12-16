@@ -1,6 +1,6 @@
 # BirdSuiteAPI
 
-Version Number: 0.1.1
+Version Number: 0.1.3.2
 
 About:
 
