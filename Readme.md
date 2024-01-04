@@ -87,9 +87,9 @@ Headers: All
 
 Notes:
 
-Common Scan will only can the most commonly used port numbers
+Common Scan will only scan the most commonly used port numbers
 luckily due to these ports being commonly used I was able to 
-add the services in use on the particular port.
+add the services used on these particular ports.
 
 Request Body:
 
