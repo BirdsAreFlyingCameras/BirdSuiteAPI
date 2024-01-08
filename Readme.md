@@ -1,6 +1,6 @@
-# BirdSuiteAPI
+# Bird Suite API
 
-Version Number: 0.1.3.2
+Version Number: Beta 0.1.3.2
 
 About:
 
