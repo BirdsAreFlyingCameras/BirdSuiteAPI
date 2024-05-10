@@ -1,5 +1,7 @@
 # Bird Suite API
 
+## This project is not actively being maintained or developed I plan on coming back to it in the future
+
 Version Number: Beta 0.1.3.2
 
 About:
